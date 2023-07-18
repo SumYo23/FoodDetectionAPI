@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from classifier.classifier import predict
 from food.models import User, Food, FoodImage
 from food.serializers import UserSerializer, FoodSerializer, FoodImageSerializer
 
@@ -44,6 +45,7 @@ class FoodList(APIView):
     def post(self, request):
         serializer = FoodSerializer(data=request.data)
         if serializer.is_valid():
+            print(serializer.validated_data.get("name"))
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -72,8 +74,16 @@ class FoodImageList(APIView):
 
     def post(self, request):
         serializer = FoodImageSerializer(data=request.data)
+
         if serializer.is_valid():
             serializer.save()
+            result = predict(serializer.data.get("image")) #리스트 형태
+            food_image = FoodImage.objects.get(id=serializer.data.get("id"))
+            for i in result:
+                food, _ = Food.objects.get_or_create(name=i)
+                food_image.food.add(food)
+            food_image.save()
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -87,6 +97,7 @@ class FoodImageDetail(APIView):
     def put(self, request, food_image_id):
         model = FoodImage.objects.get(pk=food_image_id)
         serializer = FoodImageSerializer(model, data=request.data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

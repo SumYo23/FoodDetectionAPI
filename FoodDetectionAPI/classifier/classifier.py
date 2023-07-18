@@ -32,5 +32,5 @@ def predict(file_name):
     class_name = class_names[index]
     result = list()
     result.append(class_name[2:].replace("\n", ""))
-    result.append("tomato")
+    result.append("tomato") # 리스트로 값 받아오기 위한 예제
     return result

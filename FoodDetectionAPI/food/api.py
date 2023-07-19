@@ -9,7 +9,7 @@ from food.models import Image
 from food.serializers import ImageSerializer
 
 
-class ImageClassfication(APIView):
+class ImageDetaction(APIView):
     def post(self, request):
         serializer = ImageSerializer(data=request.data)
 

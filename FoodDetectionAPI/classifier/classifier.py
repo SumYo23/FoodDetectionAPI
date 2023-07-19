@@ -5,6 +5,7 @@ import numpy as np
 
 def predict(file_name):
     file_name = '.' + str(file_name)
+    print(file_name)
     np.set_printoptions(suppress=True)
     model = load_model("./classifier/keras_model.h5", compile=False)
     class_names = open("./classifier/labels.txt", "r").readlines()
@@ -31,6 +32,6 @@ def predict(file_name):
     index = np.argmax(prediction)
     class_name = class_names[index]
     result = list()
-    result.append(class_name[2:].replace("\n", ""))
-    result.append("tomato") # 리스트로 값 받아오기 위한 예제
+    result.append(class_name[2:].replace('\n', ''))
+    result.append('tomato') # 리스트로 값 받아오기 위한 예제
     return result

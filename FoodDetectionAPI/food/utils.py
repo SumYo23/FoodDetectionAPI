@@ -3,7 +3,7 @@ from uuid import uuid4
 
 
 def rename_imagefile_to_uuid(instance, filename):
-    upload_to = f'foods'
+    upload_to = f''
     ext = filename.split('.')[-1]
     uuid = uuid4().hex
 

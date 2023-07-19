@@ -5,6 +5,7 @@ from food.models import Image
 
 class ImageSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(use_url=True)
+    foods = serializers.JSONField(required=False)
 
     class Meta:
         model = Image

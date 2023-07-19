@@ -19,10 +19,9 @@ from django.contrib import admin
 from django.urls import path
 
 from FoodDetectionAPI import settings
-from food.api import  FoodImageList, FoodImageDetail
+from food.api import ImageClassfication
 
 urlpatterns = [
                   path("admin/", admin.site.urls),
-                  path("food_image_list/", FoodImageList.as_view(), name="food_image_list"),
-                  path("food_image_list/<int:food_id>", FoodImageDetail.as_view(), name="food_image_detail"),
+                  path("image_classification/", ImageClassfication.as_view(), name="image_classification"),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_URL)

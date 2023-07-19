@@ -9,3 +9,4 @@ from food.utils import rename_imagefile_to_uuid
 
 class Image(models.Model):
     image = models.ImageField(upload_to=rename_imagefile_to_uuid, max_length=255)
+    foods = models.JSONField(default={"foods": ["apple", "tomato"]})

@@ -78,7 +78,7 @@ WSGI_APPLICATION = "FoodDetectionAPI.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": BASE_DIR / "image_temp_db.sqlite3",
     }
 }
 

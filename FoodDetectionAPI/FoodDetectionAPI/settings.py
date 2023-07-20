@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "food",
+    "rest_framework.authtoken"
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+
 }
 
 ROOT_URLCONF = "FoodDetectionAPI.urls"

@@ -17,11 +17,13 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
+from rest_framework.authtoken.views import obtain_auth_token
 
 from FoodDetectionAPI import settings
 from food.api import ImageDetaction
 
 urlpatterns = [
                   path("admin/", admin.site.urls),
+                  path("api/auth/", obtain_auth_token, name="obtain_auth_token"),
                   path("image_detection/", ImageDetaction.as_view(), name="image_detection"),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_URL)

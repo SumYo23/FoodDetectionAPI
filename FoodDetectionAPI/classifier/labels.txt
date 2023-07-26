@@ -1,2 +1,0 @@
-0 tomato
-1 apple

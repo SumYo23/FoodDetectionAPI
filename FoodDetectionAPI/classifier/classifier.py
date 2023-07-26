@@ -1,37 +1,19 @@
-from keras.models import load_model  # TensorFlow is required for Keras to work
-from PIL import Image, ImageOps  # Install pillow instead of PIL
+import torch
+from PIL import Image
 import numpy as np
 
 
 def predict(file_name):
-    file_name = '.' + str(file_name)
-    print(file_name)
-    np.set_printoptions(suppress=True)
-    model = load_model("./classifier/keras_model.h5", compile=False)
-    class_names = open("./classifier/labels.txt", "r").readlines()
-    data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+    # yolo 관련 파일 불러오기
+    model = torch.hub.load('ultralytics/yolov5', 'custom', path='./classifier/last.pt', force_reload=True)
 
-    # Replace this with the path to your image
-    image = Image.open(file_name).convert("RGB")
+    # 이미지 불러오기
+    file_name = "." + file_name
+    img = Image.open(file_name).convert("RGB")
+    img = np.array(img)
 
-    # resizing the image to be at least 224x224 and then cropping from the center
-    size = (224, 224)
-    image = ImageOps.fit(image, size, Image.Resampling.LANCZOS)
+    # 결과 받아옴
+    detect = model(img).pandas().xyxy[0].to_numpy()
+    result = list(set([i[6] for i in detect]))
 
-    # turn the image into a numpy array
-    image_array = np.asarray(image)
-
-    # Normalize the image
-    normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
-
-    # Load the image into the array
-    data[0] = normalized_image_array
-
-    # Predicts the model
-    prediction = model.predict(data)
-    index = np.argmax(prediction)
-    class_name = class_names[index]
-    result = list()
-    result.append(class_name[2:].replace('\n', ''))
-    result.append('tomato') # 리스트로 값 받아오기 위한 예제 ["tomato", "apple"]
     return result

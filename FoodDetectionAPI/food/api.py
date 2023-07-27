@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -24,12 +25,12 @@ class ImageDetaction(APIView):
             image = Image.objects.get(id=id)
             image.foods = {"foods": predict(image_route)}
             image.save()
-            os.remove("." + image_route)  # 프로젝트에 임시로 저장된 이미지 삭제
 
             '''serializer.save() 후 db에 저장했기 때문에, 새로운 serializer 호출'''
             image = Image.objects.get(id=id)
             result = ImageSerializer(image).data.get("foods")
-            image.delete()  # 프로젝트에 임시로 저장된 데이터 삭제
-
+            #shutil.rmtree("./runs")
+            shutil.rmtree("./images")
+            Image.objects.all().delete()
             return Response(result, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

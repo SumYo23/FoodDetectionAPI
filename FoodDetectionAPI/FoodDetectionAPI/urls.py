@@ -26,7 +26,6 @@ from food.api import ImageDetactionList
 
 urlpatterns = [
                   path("admin/", admin.site.urls),
-                  path("api/auth/", obtain_auth_token, name="obtain_auth_token"),
                   path("image_detection/", ImageDetaction.as_view(), name="image_detection"),
                   path("image_detection/list/", ImageDetactionList.as_view(), name="image_detection_list")
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_URL)

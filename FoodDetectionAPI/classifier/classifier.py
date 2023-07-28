@@ -1,5 +1,5 @@
-import torch
-from PIL import Image
+from keras.models import load_model  # TensorFlow is required for Keras to work
+from PIL import Image, ImageOps  # Install pillow instead of PIL
 import numpy as np
 
 def predict(file_name):
@@ -7,7 +7,7 @@ def predict(file_name):
     print(file_name)
     np.set_printoptions(suppress=True)
     model = load_model("./classifier/keras_model.h5", compile=False)
-    class_names = open("./classifier/labels.txt", "r").readlines()
+    class_names = open("./classifier/labels.txt", "r", encoding="UTF8").readlines()
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
     # Replace this with the path to your image
